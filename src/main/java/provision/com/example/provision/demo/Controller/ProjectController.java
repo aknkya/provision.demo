@@ -29,60 +29,23 @@ public class ProjectController {
 
 
 
-    @PostMapping("/datas")
-    @ApiOperation(value="Post listesi döner")
-    public String getIndex1(Model model, @RequestParam(value = "currency") String currency) throws JSONException {
-       try {
-           webServiceClass.getDataFromEntity(currency); // Verileri Web Serviceden Alır DataBase e Yazar
-       }
-       catch (Exception e)
-       {
-           return "index";
-       }
 
-
-
-
-
-
-        List<ClassEntity> arrList=serviceClass.getAll();
-        serviceClass.deleteAll();
-
-
-        PrintWriter out;
-        try {
-            out = new PrintWriter("datalar.csv");
-            out.print("date,");
-            out.println("value");
-
-            for(int i=0;i<arrList.size();i++) {
-                out.print(arrList.get(i).getDate() +",");
-                out.println(arrList.get(i).getDovizDegisim());
-            }
-            out.close();
-        } catch (FileNotFoundException e) {
-            System.err.println("File doesn't exist");
-            e.printStackTrace();
-        }
-
-
-
-
-
-        return "index";
-    }
 
 
 
     @GetMapping("/")
     @ApiOperation(value="Post listesi döner")
-    public String getIndex(Model model) throws JSONException {
+    public String getIndex(Model model, @RequestParam(required = false, value = "currency") String currency) throws JSONException {
 
-      webServiceClass.getDataFromEntity("JPY"); // Verileri Web Serviceden Alır DataBase e Yazar
+    /*  if ( currency==null || currency.isEmpty())
+        webServiceClass.getDataFromEntity("JPY"); // Verileri Web Serviceden Alır DataBase e Yazar
+      else
+          webServiceClass.getDataFromEntity(currency); // Verileri Web Serviceden Alır DataBase e Yazar
+
+*/
 
 
-
-
+         webServiceClass.getDataFromEntity( currency==null ||currency.isEmpty() ? "JPY": currency);
 
 
         List<ClassEntity> arrList=serviceClass.getAll();

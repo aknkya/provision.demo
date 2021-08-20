@@ -72,6 +72,10 @@ public class WebServiceClass {
                ClassEntity entity1=new ClassEntity();
                tarihler[i]=arr.getJSONObject(i).getString("Tarih");
              try {
+
+
+
+
                  if(arr.getJSONObject(i).getString("TP_DK_"+currency+"_A")!=null){
                      degerler[i] = arr.getJSONObject(i).getDouble("TP_DK_"+currency+"_A");
 
@@ -80,7 +84,16 @@ public class WebServiceClass {
 
               }
              catch (Exception e){
-                 degerler[i]=degerler[i-1];
+              try {
+                  degerler[i]=degerler[i-1];
+              } catch (Exception s) {
+                  if (degerler[0]==null)
+                      degerler[0]=0.0;
+              }
+
+
+
+
              }
 
                  entity1.setDate(tarihler[i]);

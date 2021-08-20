@@ -17,6 +17,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
             .getPath("")
             .toAbsolutePath()
             .toString();
+
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
