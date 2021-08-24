@@ -27,8 +27,11 @@ public class ProjectController {
     private  WebServiceClass webServiceClass;
 
 
+@GetMapping("/deneme")
+public String getDeneme(){
 
-
+    return "deneme";
+}
 
 
 
