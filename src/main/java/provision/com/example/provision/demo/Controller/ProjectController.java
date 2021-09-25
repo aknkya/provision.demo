@@ -3,13 +3,18 @@ package provision.com.example.provision.demo.Controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.json.JSONException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
+
 import provision.com.example.provision.demo.Entity.ClassEntity;
 import provision.com.example.provision.demo.Service.ServiceClass;
 import provision.com.example.provision.demo.Service.WebServiceClass;
@@ -18,9 +23,13 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
 
+
 @Controller
 @Api(value = " API Dökümantasyonu")
 public class ProjectController {
+
+    private static final Logger LOGGER= LoggerFactory.getLogger(ProjectController.class);
+
     @Autowired
     private ServiceClass serviceClass;
     @Autowired
@@ -40,13 +49,11 @@ public String getDeneme(){
     @ApiOperation(value="Post listesi döner")
     public String getIndex(Model model, @RequestParam(required = false, value = "currency") String currency) throws JSONException {
 
-    /*  if ( currency==null || currency.isEmpty())
-        webServiceClass.getDataFromEntity("JPY"); // Verileri Web Serviceden Alır DataBase e Yazar
-      else
-          webServiceClass.getDataFromEntity(currency); // Verileri Web Serviceden Alır DataBase e Yazar
-
-*/
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LOGGER.debug("This is a debug message");
+        LOGGER.info(auth.getName()+":  user logged in to maın page");
+        LOGGER.warn("This is a warn message");
+        LOGGER.error("This is an error message");
 
          webServiceClass.getDataFromEntity( currency==null ||currency.isEmpty() ? "JPY": currency);
 
